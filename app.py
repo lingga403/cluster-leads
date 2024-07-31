@@ -17,7 +17,7 @@ def load_data(file):
     return pd.read_csv(file)
 
 # Header
-#st.image("logoa2000.png", width=250)
+st.image("logoa2000.png", width=250)
 st.title("Clustering App For Leads Auto2000 Kramat Jati")
 st.write("Upload your CSV file to perform clustering")
 
@@ -45,12 +45,12 @@ if file is not None:
         df.drop(columns=['Leads Date'], inplace=True)
 
     # Display data
-    st.write("Uploaded Data:")
-    st.write(df)
+    #st.write("Uploaded Data:")
+    #st.write(df)
 
     # Kolom untuk melakukan clustering
     cols = ['Keinginan membeli', 'Kesiapan pembayaran fee', 'Kapan dapat ditemui secara langsung', 'Frekuensi penggunaan']
-    additional_cols = ['Phone', 'Model', 'Product Desc.', 'Anggaran pembelian', 'Metode pembayaran']
+    additional_cols = ['Phone', 'Pekerjaan', 'Model', 'Product Desc.', 'Anggaran pembelian', 'Metode pembayaran']
 
     if all(col in df.columns for col in cols + additional_cols + ['Customer Name', 'Reference to']):
         # Membuat clustering data frame
@@ -92,23 +92,23 @@ if file is not None:
         #st.write("Silhouette score clustering:", silhouette_avg)
         
         # Menghitung setiap centroid cluster
-        centroids = kmeans.cluster_centers_
-        st.write("Centroid setiap cluster:")
-        for i, centroid in enumerate(centroids):
-            st.write(f"Cluster {i}: {centroid}")
+        #centroids = kmeans.cluster_centers_
+        #st.write("Centroid setiap cluster:")
+        #for i, centroid in enumerate(centroids):
+            #st.write(f"Cluster {i}: {centroid}")
 
         # Menghitung jarak data ke centroid
-        clustering_data['distance_to_centroid'] = clustering_data.apply(
-            lambda row: euclidean_distance(row[cols].values, centroids[row['cluster']]),
-            axis=1
-        )
+        #clustering_data['distance_to_centroid'] = clustering_data.apply(
+            #lambda row: euclidean_distance(row[cols].values, centroids[row['cluster']]),
+            #axis=1
+        #)
 
         # Menampilkan hasil clustering
         st.write("Hasil clustering:")
         st.write(clustering_data[['Customer Name', 'Reference to', 'cluster', 'cluster_label']])
 
         # Memanngil kolom kembali
-        ordered_cols = ['Customer Name', 'Reference to', 'Phone', 'Model', 'Product Desc.', 'Anggaran pembelian', 'Metode pembayaran', 'cluster', 'cluster_label'] + cols
+        ordered_cols = ['Customer Name', 'Reference to', 'Phone', 'Pekerjaan', 'Model', 'Product Desc.', 'Anggaran pembelian', 'Metode pembayaran', 'cluster', 'cluster_label'] + cols
         clustering_data = clustering_data[ordered_cols]
 
         # Menampilkan hasil
